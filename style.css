@@ -138,3 +138,13 @@ button:disabled {
         padding: 1rem
     }
 }
+/* Adicione este bloco de estilo para a tag <footer> */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo da nota de rodapé */
+    color: white; /* Cor do texto da nota de rodapé */
+    text-align: center;
+    padding: 10px 0;
+}
