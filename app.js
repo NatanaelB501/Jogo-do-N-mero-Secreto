@@ -4,6 +4,7 @@ let numeroGeradoAleatoriamente = gerarNumeroAleatorio();
 let tentativa = 1;
 mensagemInicial();
 console.log(numeroGeradoAleatoriamente);
+alert('Clique em "Allow" para ouvir o jogo.');
 
 function exibirTela(tag, texto) {
     let campo = document.querySelector(tag);
