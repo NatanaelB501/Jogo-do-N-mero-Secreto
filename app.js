@@ -16,28 +16,20 @@ function mensagemInicial() {
     exibirTela('p', `Escolha um número entre 1 e ${numeroSecreto}: `);
 }
 
-
 function verificarChute() {
     let numeroDigitado = document.querySelector('input').value;
-    
+
     if(numeroDigitado == numeroGeradoAleatoriamente) {
-        exibirTela('h1', 'ACERTOU!!!');
-        let mensagemCorreta = tentativa > 1 ? 'tentativas' : 'tentativa'
-        let mensagemTentativas = `Você descobriu o número secreto com ${tentativa} ${mensagemCorreta}!!!.`
-        exibirTela('p', mensagemTentativas);
-        document.getElementById('reiniciar').removeAttribute('disabled');
-    } else if (numeroDigitado > numeroGeradoAleatoriamente) {
-        exibirTela('h1', 'ERROU!');
-        exibirTela('p', `O número secreto é menor.`);
-        limparCaixa();
-        } else {
-            exibirTela('h1', 'ERROU!');
-            exibirTela('p', `O número secreto é maior.`);
-            limparCaixa();
-        }
-        tentativa++
-        console.log (numeroDigitado == numeroGeradoAleatoriamente);
+        acertar();
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+            }
+        })
+    } else {
+        errou();
+        
     }
+}    
     function gerarNumeroAleatorio() {
         let numeroEscolhido = parseInt(Math.random()*numeroSecreto) + 1;
         let quantidadeNumerosLista = listaDeNumeros.length;
@@ -53,24 +45,76 @@ function verificarChute() {
             return numeroEscolhido;
         }
     }
-    function limparCaixa() {
+function limparCaixa() {
         numeroDigitado = document.querySelector('input');
         numeroDigitado.value = '';
     }
-    function reiniciarJogo() {
+function reiniciarJogo() {
         console.log('CLICADO');
         numeroGeradoAleatoriamente = gerarNumeroAleatorio();
-        console.log(`Nuvo número aleatório ${numeroGeradoAleatoriamente}.`);
+        console.log(`Novo número aleatório ${numeroGeradoAleatoriamente}.`);
         limparCaixa();
         mensagemInicial();
         tentativa = 1;
+        document.getElementById('reiniciar').setAttribute('disabled' , 'true');
+        document.getElementById('confirmar').removeAttribute('disabled', 'false');
     }
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            verificarChute();
-        }
-    })
 
+
+
+function acertar() {
+    let numeroDigitado = document.querySelector('input').value;
+    
+    if(numeroDigitado == numeroGeradoAleatoriamente) {
+        exibirTela('h1', 'ACERTOU!!!');
+        let mensagemCorreta = tentativa > 1 ? 'tentativas' : 'tentativa';
+        let mensagemTentativas = `Você descobriu o número secreto com ${tentativa} ${mensagemCorreta}!!!.`;
+        exibirTela('p', mensagemTentativas);
+        document.getElementById('reiniciar').removeAttribute('disabled');
+        document.getElementById('confirmar').setAttribute('disabled', 'true');
+    }
+}
+
+function errou() {
+    let numeroDigitado = document.querySelector('input').value;
+    
+    if (numeroDigitado > numeroGeradoAleatoriamente) {
+        exibirTela('h1', 'ERROU!');
+        exibirTela('p', `O número secreto é menor.`);
+        limparCaixa();
+        } else {
+            exibirTela('h1', 'ERROU!');
+            exibirTela('p', `O número secreto é maior.`);
+            limparCaixa();
+            document.querySelector('input').focus();
+        }
+        tentativa++
+        console.log (numeroDigitado == numeroGeradoAleatoriamente);
+}
+
+document.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter')
+       if (!document.getElementById('confirmar').hasAttribute('disabled')) {
+        document.getElementById('confirmar').click();
+       } else {
+        document.getElementById('reiniciar').click();
+       }
+})
+
+// document.querySelector('input').addEventListener('keypress', function(e) {
+//     if (e.key === 'Enter') {
+//       if (!document.getElementById('reiniciar').hasAttribute('disabled')) {
+//         document.getElementById('reiniciar').click();
+//       }
+//     }
+//   });
+    // function botaoEnter() {
+    //     if (numeroDigitado == numeroGeradoAleatoriamente) {
+    //         reiniciarJogo();
+    //     } else {
+    //         verificarChute();
+    //     }
+    // }
 // console.log ('ate aqui ok');
 
 
